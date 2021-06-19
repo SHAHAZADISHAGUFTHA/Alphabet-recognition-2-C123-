@@ -38,3 +38,21 @@ clf = LogisticRegression(solver="saga", multi_class = "multinomial".fit(x_trains
 y_pred = clf.predict(x_testscaled)
 accuracy = accuracy_score(y_test,y_pred)
 print("Accuracy:",accuracy)
+
+roi = gray[upper_left[1]:bottom_right[1],
+upper_left[0]:bottom_right[0]]
+
+image_bw = im_pil.convert('L')
+image_bw_resized = image_bw.resize((28,28), Image.ANTIALIAS)
+
+image_bw_resized_inverted = PIL.ImageOps.invert(image_bw_resized)
+pixel_filter = 20
+
+min_pixel = np.percentile(image_bw_resized_inverted,pixel_filter)
+max_pixel = np.max(image_bw_resized_inverted)
+
+image_bw_resized_inverted_scaled = np.asarray(image_bw_resized_inverted_scaled)/max_pixel
+
+test_sample = np.array(image_bw_resized_inverted_scaled),reshape(1,784)
+test_pred = clf.predict(test_sample)
+print("Predicted class:",test_pred)
